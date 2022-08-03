@@ -4,7 +4,7 @@ class Player {
   }
   sayNumber(num) {
     const strNum = String(num);
-    let statement = `${this.name}, ${this.age}: `;
+    let statement = `${this.name}: `;
     if (num % 7 === 0 || strNum.includes("7")) {
       statement += "BOOM";
     } else {
