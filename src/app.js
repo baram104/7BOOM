@@ -1,17 +1,36 @@
-import Game from "./entities/game.js";
-import Player from "./entities/player.js";
+import Game from "./publishers/game.js";
+import Player from "./clients/player.js";
+import promptSync from "prompt-sync";
+const prompt = promptSync();
 
-let limit = 50;
-const players = [
-  new Player("yoni", 12),
-  new Player("irmi", 45),
-  new Player("yossi", 13),
-];
-const game = new Game(50);
+export const run = () => {
+  console.log("Welcome to 7BOOM!");
 
-// let i = 0;
-// let j = 0;
-game.on("count", players[0].sayNumber.bind(players[0]));
-game.on("count", players[1].sayNumber.bind(players[1]));
-game.on("count", players[2].sayNumber.bind(players[2]));
-game.start(players);
+  const limit = prompt("Enter the limit number you wanna play to: ");
+  const game = new Game(limit);
+
+  let answer = "y";
+  let playerCounter = 0;
+
+  while (answer === "y") {
+    console.log("Add a player");
+    const playerName = prompt("What is your name? ");
+    const playerAge = prompt("What is your age? ");
+    const player = new Player(playerName, playerAge);
+
+    game.on("count", player.sayNumber.bind(player));
+
+    playerCounter++;
+
+    if (playerCounter < 2) {
+      continue;
+    }
+
+    console.log("do you wish to add more players? ");
+    answer = prompt(
+      "enter the letter y if you do, anything else if you dont: "
+    );
+  }
+
+  game.start();
+};
