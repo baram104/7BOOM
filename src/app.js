@@ -10,6 +10,7 @@ const readFromFileAndPlay = () => {
     const players = data.split(",");
     const limit = Number(players.pop());
     const game = new Game(limit);
+
     for (const player of players) {
       const playerArr = player.split(" ");
       const playerObj = new Player(playerArr[0], playerArr[1]);
